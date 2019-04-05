@@ -1,12 +1,8 @@
 library(tidyverse)
 library(lubridate)
-library(arules)
-library(arulesSequences)
-library(pmml)
 library(stringr)
 library(data.table)
 
-#### Load Data ####
 setwd("C:\\Users\\Neil Bardhan\\Desktop\\Ternium\\data")
 
 sales.orders <- read_delim(file = "SalesOrderDataRedComercial.txt",
@@ -62,25 +58,9 @@ weekly.cust <- sales.orders %>%
 randomForecast <- function(week.value){
   return.df <- NULL
   return.df["customer"] <- NULL
-  # temp.df <- NULL
-  # temp.df["customer"] <- NULL
-  # temp.df["SKU"] <- NULL
   sales.data <- all.sales[which(all.sales$fecha_documento < week.value), ]
-  # customers <- sales.data$cod_cliente_solicitante
-  # skus <- sales.data$SKU
-  # num.vector <- sales.data %>%
-  #   group_by(floor_date(fecha_documento, unit = "week")) %>% 
-  #   summarise(count = n())
-  # num.vector <- num.vector$count
   num.cust <- sample(weekly.cust$count, 1)
-  # print(num.trx)
-  # for(i in 1:num.cust){
-  #   temp.df$customer <- sample(all.customers, 1)
-  #   # temp.df$SKU <- sample(skus, 1)
-  #   return.df <- rbind(return.df, data.frame(temp.df))
-  # }
   return.df$customer <- sample(all.customers, num.cust)
-  # return.df <- data.frame(return.df)
   actual.week <- all.sales[which(all.sales$weekly_date == week.value), ]
   actual.week$nro_documento <- NULL
   actual.week$fecha_documento <- NULL
@@ -109,7 +89,6 @@ randomForecast <- function(week.value){
     recall <- true.positives/(true.positives + false.negatives)
   }
   return(c(precision, recall))
-  # return(return.df)
 }
 
 final.df <- NULL
