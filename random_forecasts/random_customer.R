@@ -94,15 +94,11 @@ randomForecast <- function(week.value){
   
   pred.custs <- unique(return.df$customer)
   actual.custs <- unique(actual.week$customer)
-  custs.intersect <- length(intersect(actual.custs, pred.custs))
+  custs.intersect <- intersect(actual.custs, pred.custs)
   
   true.positives <- length(custs.intersect)
   false.positives <- length(actual.custs) - true.positives
   false.negatives <- length(pred.custs) - true.positives
-  # merged.df <- merge(x = actual.week, y = return.df, by = c('customer'), all.x = TRUE)
-  # false.negatives <- sum(is.na(merged.df$confidence))
-  # true.positives <- NROW(merged.df) - false.negatives
-  # false.positives <- NROW(return.df) - true.positives
   
   if(true.positives == 0){
     precision = 0
