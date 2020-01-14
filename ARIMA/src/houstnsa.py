@@ -3,9 +3,9 @@ import numpy as np
 from datetime import datetime
 from statsmodels.tsa.arima_model import ARIMA
 
-path = "C:\\Users\\Neil Bardhan\\Desktop\\Norbord\\FRED\\forecasting\\housing-starts"
+path = "C:\\Users\\Neil Bardhan\\Desktop\\FRED\\forecasting\\housing-starts"
 
-houst = pd.read_csv(path + "\data\dependent-variable\HOUSTNSA-total-JAN9.csv", header = "infer") ### Total Housing Starts
+houst = pd.read_csv(path + "\\data\\HOUSTNSA-total-JAN9.csv", header = "infer") ### Total Housing Starts
 
 houst['DATE'] = pd.to_datetime(houst['DATE'], format = '%Y-%m-%d')
 houst = houst.set_index('DATE')
@@ -30,14 +30,3 @@ resdf['lowerbound'] = lowerlim
 resdf['upperbound'] = upperlim
 print(resdf)
 resdf.to_csv(path + "\\data\\generated-forecasts\\forecast-HOUST-2018.csv", header = True, index = False)
-
-regionDivision = pd.read_csv("C:\\Users\\Neil Bardhan\\Desktop\\Norbord\\FRED\\forecasting\\housing-starts\\comparison-forecasts-2018\\DistributionByMonthByRegion.csv", header = 'infer')
-regionDivision = regionDivision.set_index('MonthNumber')
-resdf['MonthNumber'] = pd.DatetimeIndex(resdf['month']).month.astype(np.int64)
-resdf = resdf.set_index('MonthNumber')
-regionalDF = pd.merge(resdf, regionDivision, how='outer', right_index=True, left_on='MonthNumber')
-regionalDF['forecast_hs_regional'] = regionalDF['forecast_hs_thousands'] * regionalDF['Total']
-regionalDF.drop(['Total', 'lowerbound', 'upperbound'], axis = 1, inplace = True)
-regionalDF.columns = ['month', 'forecast_hs_thousands', 'RL_Region', 'forecast_hs_regional_thousands']
-regionalDF.to_csv(path + "\\data\\generated-forecasts\\2019_20_housingstartsforecast_regional_20200109_v1.csv",
-                    header = True, index = False)
