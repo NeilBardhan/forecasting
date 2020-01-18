@@ -2,7 +2,7 @@ import os
 import time
 import numpy as np
 import pandas as pd
-from datetime import datetime
+from datetime import date
 from statsmodels.tsa.arima_model import ARIMA
 
 os.chdir('..')
@@ -36,7 +36,10 @@ def main():
     df = loadData()
     df.set_index('DATE', inplace=True)
     out = modelRunner(df)
-    print(out)
+    today = date.today()
+    suffix = today.strftime("%Y_%m_%d")
+    outfile = os.getcwd() + "//outputs//forecast-files//US_HS_monthly_forecast_"+suffix+".csv"
+    out.to_csv(outfile, index=False, header=True)
 
 
 if __name__ == '__main__':
