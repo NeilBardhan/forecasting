@@ -1,8 +1,9 @@
 import os
+import sys
 import time
 import numpy as np
 import pandas as pd
-from datetime import date
+from datetime import datetime
 from statsmodels.tsa.arima_model import ARIMA
 
 os.chdir('..')
@@ -33,11 +34,16 @@ def modelRunner(df):
 
 
 def main():
+    today = datetime.now()
+    suffix = today.strftime("%Y_%m_%d_%H") + '00HRS'
+
+    stdoutOrigin = sys.stdout
+    sys.stdout = open(os.getcwd() + "//outputs//logs//log" + suffix +".txt", "w")
+    
     df = loadData()
     df.set_index('DATE', inplace=True)
     out = modelRunner(df)
-    today = date.today()
-    suffix = today.strftime("%Y_%m_%d")
+    
     outfile = os.getcwd() + "//outputs//forecast-files//US_HS_monthly_forecast_"+suffix+".csv"
     out.to_csv(outfile, index=False, header=True)
 
