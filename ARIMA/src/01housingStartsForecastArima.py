@@ -46,6 +46,10 @@ def main():
     
     outfile = os.getcwd() + "//outputs//forecast-files//US_HS_monthly_forecast_"+suffix+".csv"
     out.to_csv(outfile, index=False, header=True)
+    print("Forecast saved to", outfile)
+    
+    sys.stdout.close()
+    sys.stdout = stdoutOrigin
 
 
 if __name__ == '__main__':
