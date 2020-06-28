@@ -1,1 +1,1 @@
-Housing Starts data from St. Louis Fed Reserve https://fred.stlouisfed.org/, ID : HOUSTNSA
+Housing Starts data from St. Louis Fed Reserve https://fred.stlouisfed.org/, ID : HOUSTNSA. Housing starts are an important indicator of the economy as it informs upon 2 important sectors : Construction work and consumer spending, both vital markers of an economy. In hard times, consumer spending decreases as people have less expendable income for major purchases. Conversely, as the economy booms, people have more capital for major purchases.
